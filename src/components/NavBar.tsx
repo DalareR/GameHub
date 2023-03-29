@@ -6,11 +6,10 @@ import {
   InputGroup,
   InputLeftElement,
   Switch,
-  theme,
-  Text,
   useColorMode,
   Image,
 } from "@chakra-ui/react";
+import { MoonIcon } from "@chakra-ui/icons";
 
 interface NavBarProps {
   searchInput: string;
@@ -31,14 +30,14 @@ export default function NavBar({ searchInput, onSearchChange }: NavBarProps) {
           borderRadius={"25px"}
         />
       </InputGroup>
-      <Flex align="center">
+      <Flex align="center" justify={"center"}>
         <Switch
           mr={"5px"}
           defaultChecked
           isChecked={colorMode === "dark"}
           onChange={toggleColorMode}
         />
-        <Text fontSize="sm">Dark Mode</Text>
+        <MoonIcon w="20px" h="20px" />
       </Flex>
     </HStack>
   );

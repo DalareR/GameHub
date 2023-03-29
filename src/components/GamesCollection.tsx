@@ -8,27 +8,31 @@ import {
   Heading,
   Select,
   SimpleGrid,
-  theme,
   useMediaQuery,
-  CardHeader,
 } from "@chakra-ui/react";
 import _ from "lodash";
 import { useState } from "react";
 import { GameType } from "../services/gamesService";
 import { PlatformsType } from "../services/platformsService";
+import GameCardSkeleton from "./CardSkeleton";
 
 interface GameCollectionProps {
   games: GameType[];
   platforms: PlatformsType[];
+  isLoading: boolean;
+  error: string;
 }
 
 export default function GamesCollection({
   games,
   platforms,
+  isLoading,
+  error,
 }: GameCollectionProps) {
   const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
   const [orderBy, setOrderBy] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
+  const skeletons = [1, 2, 3, 4, 5, 6];
 
   const platformFilteredGames =
     !selectedPlatform || selectedPlatform === "Select Platform"
@@ -78,8 +82,12 @@ export default function GamesCollection({
         templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
         mt={"25px"}
       >
-        {orderFilteredGames.length === 0 ? (
-          <Text fontSize="4xl">No Games</Text>
+        {error ? (
+          <Text>{error}</Text>
+        ) : isLoading ? (
+          skeletons.map((skeleton) => <GameCardSkeleton key={skeleton} />)
+        ) : orderFilteredGames.length === 0 ? (
+          <Text>No Games</Text>
         ) : (
           orderFilteredGames.map((game) => (
             <Card

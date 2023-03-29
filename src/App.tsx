@@ -16,16 +16,23 @@ function App() {
   const [platforms, setPlatforms] = useState<PlatformsType[]>([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [searchInput, setSearchInput] = useState("");
-
-  console.log(games);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
+
     genresService
       .then((res) => setGenres(res.data.results))
       .catch((err) => setError(err.message));
     gamesService
-      .then((res) => setGames(res.data.results))
-      .catch((err) => setError(err.message));
+      .then((res) => {
+        setGames(res.data.results);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
+      });
     platformsService
       .then((res) => setPlatforms(res.data.results))
       .catch((err) => setError(err.message));
@@ -64,8 +71,14 @@ function App() {
           genres={genres}
           onGenreSelect={handleGenreSelect}
           selectedGenre={selectedGenre}
+          isLoading={isLoading}
         />
-        <GamesCollection games={filterGenre} platforms={platforms} />
+        <GamesCollection
+          games={filterGenre}
+          platforms={platforms}
+          isLoading={isLoading}
+          error={error}
+        />
       </Flex>
     </div>
   );
