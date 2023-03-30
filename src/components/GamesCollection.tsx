@@ -12,8 +12,7 @@ import {
 } from "@chakra-ui/react";
 import _ from "lodash";
 import { useState } from "react";
-import { GameType } from "../hooks/useGames";
-import { PlatformsType } from "../hooks/usePlatforms";
+import { GameType } from "../compiler/types";
 import GameCardSkeleton from "./CardSkeleton";
 
 interface GameCollectionProps {
