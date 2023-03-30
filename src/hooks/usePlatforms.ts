@@ -7,7 +7,6 @@ function usePlatforms() {
     game.parent_platforms.map((p) => p.platform)
   );
   const platforms = _.uniqBy(platformsArray.flat(1), "name");
-  console.log(platforms);
   return { platforms };
 }
 
