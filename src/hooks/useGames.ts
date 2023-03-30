@@ -18,7 +18,8 @@ export interface GameType {
 }
 
 function useGames() {
-  return useData<GameType>("games");
+  const { data: games, isLoading, error } = useData<GameType>("games");
+  return { games, isLoading, error };
 }
 
 export default useGames;

@@ -9,9 +9,9 @@ import useGenres from "./hooks/useGenres";
 import usePlatforms from "./hooks/usePlatforms";
 
 function App() {
-  const { data: games, isLoading, error } = useGames();
-  const { data: genres } = useGenres();
-  const { data: platforms } = usePlatforms();
+  const { games, isLoading, error } = useGames();
+  const { genres } = useGenres();
+  const { platforms } = usePlatforms();
   const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
   const [searchInput, setSearchInput] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");

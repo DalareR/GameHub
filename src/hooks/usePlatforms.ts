@@ -1,4 +1,5 @@
 import useData from "./useData";
+import useGames from "./useGames";
 
 export interface PlatformsType {
   id: number;
@@ -6,7 +7,8 @@ export interface PlatformsType {
 }
 
 function usePlatforms() {
-  return useData<PlatformsType>("platforms");
+  const { data: platforms } = useData<PlatformsType>("platforms");
+  return { platforms };
 }
 
 export default usePlatforms;
