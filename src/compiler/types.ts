@@ -1,9 +1,7 @@
 export interface Platform {
-  platform: {
-    id: number;
-    name: string;
-    slug: string;
-  };
+  id: number;
+  name: string;
+  slug: string;
 }
 
 export interface Genre {
@@ -26,6 +24,6 @@ export interface GameType {
   release: string;
   playtime: number;
   reviews_count: number;
-  parent_platforms: Platform[];
+  parent_platforms: { platform: Platform }[];
   genres: GenresType[];
 }

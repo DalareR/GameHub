@@ -9,15 +9,29 @@ import {
   Select,
   SimpleGrid,
   useMediaQuery,
+  Icon,
+  HStack,
 } from "@chakra-ui/react";
-import _ from "lodash";
+import {
+  FaWindows,
+  FaApple,
+  FaPlaystation,
+  FaXbox,
+  FaLinux,
+  FaAndroid,
+} from "react-icons/fa";
+import { MdOutlineDesktopMac } from "react-icons/md";
+import { SiNintendoswitch } from "react-icons/si";
+import { CgWebsite } from "react-icons/cg";
 import { useState } from "react";
-import { GameType } from "../compiler/types";
+import { GameType, Platform } from "../compiler/types";
 import GameCardSkeleton from "./CardSkeleton";
+import _ from "lodash";
+import { IconType } from "react-icons";
 
 interface GameCollectionProps {
   games: GameType[];
-  platforms: string[];
+  platforms: Platform[];
   isLoading: boolean;
   error: string;
 }
@@ -32,6 +46,18 @@ export default function GamesCollection({
   const [orderBy, setOrderBy] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const skeletons = [1, 2, 3, 4, 5, 6];
+
+  const icons: { [key: string]: IconType } = {
+    pc: FaWindows,
+    playstation: FaPlaystation,
+    xbox: FaXbox,
+    nintendo: SiNintendoswitch,
+    mac: MdOutlineDesktopMac,
+    linux: FaLinux,
+    android: FaAndroid,
+    ios: FaApple,
+    web: CgWebsite,
+  };
 
   const platformFilteredGames =
     !selectedPlatform || selectedPlatform === "Select Platform"
@@ -65,8 +91,8 @@ export default function GamesCollection({
             Select Platform
           </option>
           {platforms.map((platform) => (
-            <option key={platform} value={platform}>
-              {platform}
+            <option key={platform.id} value={platform.name}>
+              {platform.name}
             </option>
           ))}
         </Select>
@@ -83,9 +109,8 @@ export default function GamesCollection({
         templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
         mt={"25px"}
       >
-        {error ? (
-          <Text>{error}</Text>
-        ) : isLoading ? (
+        {error && <Text>{error}</Text>}
+        {isLoading ? (
           skeletons.map((skeleton) => <GameCardSkeleton key={skeleton} />)
         ) : orderFilteredGames.length === 0 ? (
           <Text>No Games</Text>
@@ -108,6 +133,16 @@ export default function GamesCollection({
                 borderRadius="lg"
               />
               <CardBody>
+                <HStack justify="center">
+                  {game.parent_platforms.map((p) => (
+                    <Icon
+                      key={p.platform.id}
+                      as={icons[p.platform.slug]}
+                      color="gray.500"
+                      fontSize="15"
+                    />
+                  ))}
+                </HStack>
                 <Stack mt="6" spacing="3">
                   <Heading size="md" textAlign={"center"}>
                     {game.name}

@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   Select,
 } from "@chakra-ui/react";
-import GenresType from "../services/genresService";
+import { GenresType } from "../compiler/types";
 import ListSkeleton from "./ListSkeleton";
 
 interface GenresProps {
