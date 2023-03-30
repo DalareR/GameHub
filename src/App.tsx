@@ -1,42 +1,20 @@
 import { Flex, useMediaQuery } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GamesCollection from "./components/GamesCollection";
 import Genres from "./components/Genres";
 import NavBar from "./components/NavBar";
-import { gamesService, GameType } from "./services/gamesService";
-import GenresType, { genresService } from "./services/genresService";
-import { platformsService, PlatformsType } from "./services/platformsService";
 import _ from "lodash";
+import useGames from "./hooks/useGames";
+import useGenres from "./hooks/useGenres";
+import usePlatforms from "./hooks/usePlatforms";
 
 function App() {
+  const { data: games, isLoading, error } = useGames();
+  const { data: genres } = useGenres();
+  const { data: platforms } = usePlatforms();
   const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
-  const [error, setError] = useState("");
-  const [genres, setGenres] = useState<GenresType[]>([]);
-  const [games, setGames] = useState<GameType[]>([]);
-  const [platforms, setPlatforms] = useState<PlatformsType[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    genresService
-      .then((res) => setGenres(res.data.results))
-      .catch((err) => setError(err.message));
-    gamesService
-      .then((res) => {
-        setGames(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setIsLoading(false);
-      });
-    platformsService
-      .then((res) => setPlatforms(res.data.results))
-      .catch((err) => setError(err.message));
-  }, []);
+  const [selectedGenre, setSelectedGenre] = useState("");
 
   const filterSearch = !searchInput
     ? games

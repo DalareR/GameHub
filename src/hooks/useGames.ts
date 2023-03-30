@@ -1,6 +1,5 @@
-import GenresType from "./genresService";
-import httpService from "./httpService";
-// import { PlatformsType } from "./platformsService";
+import useData from "./useData";
+import { GenresType } from "./useGenres";
 
 interface Platforms {
   platform: { id: string; name: string };
@@ -18,4 +17,8 @@ export interface GameType {
   genres: GenresType[];
 }
 
-export const gamesService = httpService.getData("games");
+function useGames() {
+  return useData<GameType>("games");
+}
+
+export default useGames;
