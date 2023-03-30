@@ -18,7 +18,7 @@ import GameCardSkeleton from "./CardSkeleton";
 
 interface GameCollectionProps {
   games: GameType[];
-  platforms: PlatformsType[];
+  platforms: string[];
   isLoading: boolean;
   error: string;
 }
@@ -38,7 +38,9 @@ export default function GamesCollection({
     !selectedPlatform || selectedPlatform === "Select Platform"
       ? games
       : games.filter((game) =>
-          game.platforms.map((p) => p.platform.name).includes(selectedPlatform)
+          game.parent_platforms
+            .map((p) => p.platform.name)
+            .includes(selectedPlatform)
         );
 
   const orderFilteredGames = !orderBy
@@ -64,8 +66,8 @@ export default function GamesCollection({
             Select Platform
           </option>
           {platforms.map((platform) => (
-            <option key={platform.id} value={platform.name}>
-              {platform.name}
+            <option key={platform} value={platform}>
+              {platform}
             </option>
           ))}
         </Select>

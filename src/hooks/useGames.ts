@@ -1,8 +1,12 @@
 import useData from "./useData";
 import { GenresType } from "./useGenres";
 
-interface Platforms {
-  platform: { id: string; name: string };
+interface Platform {
+  platform: {
+    id: number;
+    name: string;
+    slug: string;
+  };
 }
 
 export interface GameType {
@@ -13,7 +17,7 @@ export interface GameType {
   release: string;
   playtime: number;
   reviews_count: number;
-  platforms: Platforms[];
+  parent_platforms: Platform[];
   genres: GenresType[];
 }
 
